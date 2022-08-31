@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\user_domicilio;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserDomicilioController extends Controller
 {
@@ -14,72 +13,16 @@ class UserDomicilioController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = User::with('domicilios')->get();
+        foreach ($usuarios as $user) {
+            $hoy = date("Y-m-d");
+            $edad = date_diff(date_create($user->fecha_nacimiento), date_create($hoy));
+            $user->edad = $edad->format('%y');
+            # code...
+        }
+
+        return $usuarios;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\user_domicilio  $user_domicilio
-     * @return \Illuminate\Http\Response
-     */
-    public function show(user_domicilio $user_domicilio)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\user_domicilio  $user_domicilio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(user_domicilio $user_domicilio)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\user_domicilio  $user_domicilio
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, user_domicilio $user_domicilio)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\user_domicilio  $user_domicilio
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(user_domicilio $user_domicilio)
-    {
-        //
-    }
+   
 }

@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->date('fecha_nacimiento')->after('nombre');
+
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -27,6 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('fecha_nacimiento');
+
+        });
     }
 };
